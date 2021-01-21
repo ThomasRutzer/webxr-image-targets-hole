@@ -1,0 +1,25 @@
+html,
+body,
+#root,
+canvas {
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+:root {
+  --color-primary: #FE9F1B;
+  --color-primary-shaded: #8e5507;
+  --color-secondary: #A866EE;
+  --color-secondary-shaded: #894eca;
+  --color-white: #e2e2e2;
+  --color-white-shaded: #b7b7b7;
+  --color-red: #F74803;
+  --color-red-shaded: #762e11;
+  --border-radius-default: 4px;
+}
+
+body {
+  font-family: 'Righteous', sans-serif;}
