@@ -39,6 +39,7 @@ XrImageTracking.prototype.add = function (image, width) {
   if (!this._supported) return null;
 
   var trackedImage = new XrTrackedImage(image, width);
+  console.log(trackedImage);
   this._images.push(trackedImage);
   return trackedImage;
 };
@@ -67,7 +68,6 @@ XrImageTracking.prototype.onSessionStart = function (session) {
       self._images[i]._trackable = images[i] === "trackable";
     }
   }).catch(function (err) {
-    console.log(err);
     self._available = false;
     // self.fire("error", err);
   });
@@ -82,7 +82,7 @@ XrImageTracking.prototype.onSessionEnd = function () {
 
     if (this._images[i]._tracking) {
       this._images[i]._tracking = false;
-      this._images[i].fire("untracked");
+      // this._images[i].fire("untracked");
     }
   }
 };
@@ -101,7 +101,7 @@ XrImageTracking.prototype.prepareImages = function (callback = () => {}) {
   }
 };
 
-XrImageTracking.prototype.update = function (frame) {
+XrImageTracking.prototype.update = function (frame, referenceSpace) {
   if (!this._available) return;
 
   var results = frame.getImageTrackingResults();
@@ -115,18 +115,21 @@ XrImageTracking.prototype.update = function (frame) {
     trackedImage._emulated = results[i].trackingState === "emulated";
     trackedImage._measuredWidth = results[i].measuredWidthInMeters;
     trackedImage._dirtyTransform = true;
-    trackedImage._pose = frame.getPose(results[i].imageSpace,  "local");
+    trackedImage._pose = frame.getPose(results[i].imageSpace, referenceSpace);
   }
 
   for (i = 0; i < this._images.length; i++) {
     if (this._images[i]._tracking && !index[i]) {
       this._images[i]._tracking = false;
-      this._images[i].fire("untracked");
+      // this._images[i].fire("untracked");
     } else if (!this._images[i]._tracking && index[i]) {
       this._images[i]._tracking = true;
-      this._images[i].fire("tracked");
+      // imageData = this._images[i]
+      // this._images[i].fire("tracked");
     }
   }
+
+  return this._images
 };
 
 Object.defineProperty(XrImageTracking.prototype, "supported", {

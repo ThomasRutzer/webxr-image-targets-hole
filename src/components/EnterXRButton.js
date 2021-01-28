@@ -4,7 +4,6 @@ class ARButton {
     const button = document.createElement('button');
 
     function showStartAR( /*device*/) {
-
       if (sessionInit.domOverlay === undefined) {
 
         var overlay = document.createElement('div');
@@ -39,7 +38,6 @@ class ARButton {
       let currentSession = null;
 
       function onSessionStarted(session) {
-
         session.addEventListener('end', onSessionEnded);
 
         renderer.xr.setReferenceSpaceType('local');
@@ -86,10 +84,11 @@ class ARButton {
       // };
 
       button.onclick = function () {
-
         if (currentSession === null) {
 
-          navigator.xr.requestSession('immersive-ar', {sessionInit, trackedImages: window.trackedImages}).then(onSessionStarted);
+          console.log(window.trackedImages);
+
+          navigator.xr.requestSession('immersive-ar', {...sessionInit, trackedImages: window.trackedImages}).then(onSessionStarted);
 
         } else {
 

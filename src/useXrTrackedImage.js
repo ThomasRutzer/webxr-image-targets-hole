@@ -8,24 +8,25 @@ export const useXrTrackedImage = (image) => {
   const { gl } = useThree()
   const xrImageTracking = useMemo(() => new XrImageTracking(), [])
   const xrFrameRef = useRef()
-  const [trackedImages, setTrackedImages] = useState()
+  const [pose, setPose] = useState()
+  const { isPresenting } = useXR()
 
   const xrUpdate = useCallback((time, xrFrame) => {
-    xrImageTracking.update(xrFrame)
+    const imageTrackingResult = xrImageTracking.update(xrFrame, gl.xr.getReferenceSpace())
+    setPose(imageTrackingResult[0])
     xrFrameRef.current = gl.xr.getSession().requestAnimationFrame(xrUpdate)
   }, [gl.xr, xrImageTracking])
 
   useEffect(() => {
     xrImageTracking.add(image, 0.1)
     xrImageTracking.prepareImages((err, images) => {
-      console.log(err);
-      setTrackedImages(images)
+      window.trackedImages = images
     })
   }, [image, xrImageTracking])
 
   useEffect(() => {
     if (!xrImageTracking.supported) return
-    if (!gl.xr.isPresenting) return
+    if (!isPresenting) return
 
     const session = gl.xr.getSession()
     xrImageTracking.onSessionStart(session)
@@ -34,10 +35,11 @@ export const useXrTrackedImage = (image) => {
     return () => {
       xrImageTracking.onSessionEnd()
       session.cancelAnimationFrame(xrFrameRef.current)
+      setPose(null)
     }
-  }, [gl.xr, gl.xr.isPresenting, xrImageTracking, xrUpdate])
+  }, [gl.xr, isPresenting, xrImageTracking, xrUpdate])
 
-  return trackedImages
+  return pose
 }
 
 export default useXrTrackedImage

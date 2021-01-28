@@ -46,7 +46,10 @@ XrTrackedImage.prototype.destroy = function () {
 };
 
 XrTrackedImage.prototype.getPosition = function () {
-    if (this._pose) this._position.copy(this._pose.transform.position);
+    if (this._pose) {
+      this._position.copy(this._pose.transform.position);
+    }
+
     return this._position;
 };
 
