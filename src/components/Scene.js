@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { useFrame } from "react-three-fiber"
 import { ARCanvas } from "@react-three/xr"
 
@@ -9,23 +9,22 @@ import EnterXRButton from "./EnterXRButton"
 function Box(props) {
   // This reference will give us direct access to the mesh
   const mesh = useRef()
-  const imageTrackingResult = useXrTrackedImage(props.img)
+  const imageTrackingResult = useXrTrackedImage(props.img, 0.1)
 
   // Rotate mesh every frame, this is outside of React without overhead
   useFrame(() => {
+    if(!imageTrackingResult) return
+
+    if(imageTrackingResult.emulated) {
+      mesh.current.visible = false
+      return
+    }
+
     if (imageTrackingResult) {
+      mesh.current.visible = true
 
-      const { x: posX, y: posY, z: posZ } = imageTrackingResult.getPosition()
-      const { x: rotX, y: rotY, z: rotZ } = imageTrackingResult.getRotation()
-      mesh.current.position.x = posX
-      mesh.current.position.y = posY
-      mesh.current.position.z = posZ
-
-      mesh.current.rotation.x = rotX
-      mesh.current.rotation.y = rotY
-      mesh.current.rotation.z = rotZ
-
-      console.log(mesh.current.position);
+      mesh.current.position.copy(imageTrackingResult.position)
+      mesh.current.rotation.copy(imageTrackingResult.rotation)
     }
   })
 
@@ -43,14 +42,9 @@ function Scene() {
   const image = useRef()
   const [trackingImage, setTrackingImage] = useState()
 
-  useEffect(() => {
-    if (!image.current) return
-    setTrackingImage(image.current)
-  }, [image])
-
   return (
     <>
-      <img width="300" height="300" alt="is cool" ref={image} src={track} />
+      <img onLoad={() => setTrackingImage(image.current)} width="300" height="300" alt="is cool" ref={image} src={track} />
       { trackingImage &&
         <ARCanvas
           sessionInit={{ requiredFeatures: ["image-tracking"] }}

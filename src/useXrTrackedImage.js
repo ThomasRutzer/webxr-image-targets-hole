@@ -1,45 +1,66 @@
-import { useXR } from "@react-three/xr"
 import { useEffect, useState, useMemo, useRef, useCallback } from "react"
-import { useThree, useFrame } from "react-three-fiber"
+import { useXR } from "@react-three/xr"
+import { useThree } from "react-three-fiber"
 
-import { XrImageTracking } from "./services/xr/xrImageTracking"
+import { imageTracking, trackableImage as createTrackableImage } from "./services/xr"
 
-export const useXrTrackedImage = (image) => {
-  const { gl } = useThree()
-  const xrImageTracking = useMemo(() => new XrImageTracking(), [])
+export const useXrTrackedImage = (image, imgSizeInMeters) => {
+  const xrDeviceState = useMemo(() => ({
+    isSupported: !!window.XRImageTrackingResult
+  }), [])
+  const xrImageTracking = useMemo(() => imageTracking(), [])
   const xrFrameRef = useRef()
-  const [pose, setPose] = useState()
+  const [currImageTrackingResult, setCurrImageTrackingResult] = useState()
+  const [trackableImage, setTrackableImage] = useState()
+  const { gl } = useThree()
   const { isPresenting } = useXR()
 
-  const xrUpdate = useCallback((time, xrFrame) => {
-    const imageTrackingResult = xrImageTracking.update(xrFrame, gl.xr.getReferenceSpace())
-    setPose(imageTrackingResult[0])
-    xrFrameRef.current = gl.xr.getSession().requestAnimationFrame(xrUpdate)
+  const xrImageTrackingUpdate = useCallback((time, xrFrame) => {
+    const imageTrackingResult = xrImageTracking.onFrameUpdate(xrFrame, gl.xr.getReferenceSpace())
+    setCurrImageTrackingResult(imageTrackingResult)
+    xrFrameRef.current = gl.xr.getSession().requestAnimationFrame(xrImageTrackingUpdate)
   }, [gl.xr, xrImageTracking])
 
   useEffect(() => {
-    xrImageTracking.add(image, 0.1)
-    xrImageTracking.prepareImages((err, images) => {
-      window.trackedImages = images
-    })
-  }, [image, xrImageTracking])
+    const doCreateTrackableImage = async () => {
+      try {
+        const currTrackableImage = await createTrackableImage(image, imgSizeInMeters)
+        setTrackableImage(currTrackableImage)
+        window.trackedImages = [currTrackableImage.image]
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    doCreateTrackableImage()
+
+    return () => trackableImage ? trackableImage.destroy() : null
+  }, [image, imgSizeInMeters, xrImageTracking, trackableImage])
 
   useEffect(() => {
-    if (!xrImageTracking.supported) return
-    if (!isPresenting) return
+    if (!xrDeviceState.isSupported || !isPresenting) return
 
     const session = gl.xr.getSession()
-    xrImageTracking.onSessionStart(session)
-    xrFrameRef.current = session.requestAnimationFrame(xrUpdate)
+
+    const checkCanTrack = async () => {
+      try {
+        await xrImageTracking.onSessionStart(session)
+        xrFrameRef.current = session.requestAnimationFrame(xrImageTrackingUpdate)
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    checkCanTrack()
 
     return () => {
       xrImageTracking.onSessionEnd()
       session.cancelAnimationFrame(xrFrameRef.current)
-      setPose(null)
+      setCurrImageTrackingResult(null)
     }
-  }, [gl.xr, isPresenting, xrImageTracking, xrUpdate])
+  }, [gl.xr, isPresenting, xrImageTracking, xrImageTrackingUpdate, xrDeviceState.isSupported])
 
-  return pose
+  return currImageTrackingResult
 }
 
 export default useXrTrackedImage
