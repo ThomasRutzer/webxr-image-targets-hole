@@ -10,7 +10,7 @@ const onXrSessionEnd = () => {
 
 const onXrFrameUpdate = (frame, referenceSpace) => {
   const trackingResults = frame.getImageTrackingResults()
-  
+
   if (trackingResults.length === 0) return
 
   const pose = frame.getPose(trackingResults[0].imageSpace, referenceSpace)
