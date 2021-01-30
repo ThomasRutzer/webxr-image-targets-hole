@@ -71,18 +71,6 @@ class ARButton {
 
       button.textContent = "LET'S START AR";
 
-      // button.onmouseenter = function () {
-
-      //   button.style.opacity = '1.0';
-
-      // };
-
-      // button.onmouseleave = function () {
-
-      //   button.style.opacity = '0.5';
-
-      // };
-
       button.onclick = function () {
         if (currentSession === null) {
 

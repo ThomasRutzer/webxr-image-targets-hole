@@ -25,8 +25,8 @@ export const useXrTrackedImage = (image, imgSizeInMeters) => {
     const doCreateTrackableImage = async () => {
       try {
         const currTrackableImage = await createTrackableImage(image, imgSizeInMeters)
+        console.log("here")
         setTrackableImage(currTrackableImage)
-        window.trackedImages = [currTrackableImage.image]
       } catch (err) {
         console.log(err);
       }
@@ -60,7 +60,7 @@ export const useXrTrackedImage = (image, imgSizeInMeters) => {
     }
   }, [gl.xr, isPresenting, xrImageTracking, xrImageTrackingUpdate, xrDeviceState.isSupported])
 
-  return currImageTrackingResult
+  return { imageTrackingResult: currImageTrackingResult, trackableImage: trackableImage?.image }
 }
 
 export default useXrTrackedImage
