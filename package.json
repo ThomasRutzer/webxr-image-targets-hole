@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
+    "@react-three/cannon": "^0.5.3",
     "@react-three/drei": "^2.2.3",
     "@react-three/xr": "^2.0.0",
     "@testing-library/jest-dom": "^5.11.4",

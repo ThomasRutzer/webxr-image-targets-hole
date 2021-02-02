@@ -1,32 +1,28 @@
-import React, { useRef, useState } from "react"
+import React, { useRef } from "react"
 import { useFrame } from "react-three-fiber"
-import { ARCanvas } from "@react-three/xr"
+import { Physics, usePlane, useBox } from "@react-three/cannon"
 
-import { trackableImage as createTrackableImage } from "./../services/xr"
 import useXrTrackedImage from "./../useXrTrackedImage"
-import track from "./../trackingImages/test.png"
 
-function Box(props) {
+function Box({ emulated, position, rotation }) {
   const mesh = useRef()
-  const imageTrackingResult = useXrTrackedImage()
 
   useFrame(() => {
-    if (!imageTrackingResult || imageTrackingResult.emulated) {
+    if (emulated || !position) {
       mesh.current.visible = false
       return
     }
 
-    if (imageTrackingResult) {
+    if (position && rotation) {
       mesh.current.visible = true
 
-      mesh.current.position.copy(imageTrackingResult.position)
-      mesh.current.rotation.copy(imageTrackingResult.rotation)
+      mesh.current.position.copy(position)
+      mesh.current.rotation.copy(rotation)
     }
   })
 
   return (
     <mesh
-      {...props}
       ref={mesh}>
       <boxBufferGeometry args={[0.1, 0.1, 0.1]} />
       <meshStandardMaterial
@@ -36,38 +32,37 @@ function Box(props) {
   )
 }
 
-function Scene() {
-  const image = useRef()
-  const [trackableImage, setTrackableImage] = useState()
+function Plane(props) {
+  const [ref] = usePlane(() => ({ rotation: [-Math.PI / 2, 0, 0], ...props }))
+  return (
+    <mesh ref={ref}>
+      <planeBufferGeometry attach="geometry" args={[100, 100]} />
+    </mesh>
+  )
+}
 
-  const doCreateTrackableImage = async () => {
-    try {
-      const currTrackableImage = await createTrackableImage(image.current, 0.1)
-      setTrackableImage(currTrackableImage.image)
-    } catch (err) {
-      console.log(err);
-    }
-  }
+function Cube(props) {
+  const [ref] = useBox(() => ({ mass: 1, position: [0, 5, 0], ...props }))
+  return (
+    <mesh ref={ref}>
+      <boxBufferGeometry attach="geometry" />
+    </mesh>
+  )
+}
+
+function Scene() {
+  const imageTrackingResult = useXrTrackedImage()
 
   return (
     <>
-      <img
-        onLoad={() => doCreateTrackableImage()}
-        width="300" height="300"
-        alt="is cool"
-        ref={image}
-        src={track} />
-      { trackableImage &&
-        <ARCanvas
-          sessionInit={{
-            requiredFeatures: ["image-tracking"],
-            trackedImages: [trackableImage]
-          }}>
-          <ambientLight />
-          <pointLight position={[10, 10, 10]} />
-          <Box />
-        </ARCanvas>
-      }
+      <Physics>
+        <Plane />
+        <Cube />
+      </Physics>
+      {/* <Box 
+        emulated={imageTrackingResult?.emulated} 
+        position={imageTrackingResult?.position} 
+        rotation={imageTrackingResult?.rotation} /> */}
     </>
   )
 }
