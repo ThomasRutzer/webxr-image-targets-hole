@@ -2,40 +2,23 @@ import { useEffect, useState, useMemo, useRef, useCallback } from "react"
 import { useXR } from "@react-three/xr"
 import { useThree } from "react-three-fiber"
 
-import { imageTracking, trackableImage as createTrackableImage } from "./services/xr"
+import { imageTracking } from "./services/xr"
 
-export const useXrTrackedImage = (image, imgSizeInMeters) => {
+export const useXrTrackedImage = () => {
   const xrDeviceState = useMemo(() => ({
     isSupported: !!window.XRImageTrackingResult
   }), [])
   const xrImageTracking = useMemo(() => imageTracking(), [])
   const xrFrameRef = useRef()
-  const [currImageTrackingResult, setCurrImageTrackingResult] = useState()
-  const [trackableImage, setTrackableImage] = useState()
+  const [imageTrackingResult, setImageTrackingResult] = useState()
   const { gl } = useThree()
   const { isPresenting } = useXR()
 
   const xrImageTrackingUpdate = useCallback((time, xrFrame) => {
     const imageTrackingResult = xrImageTracking.onFrameUpdate(xrFrame, gl.xr.getReferenceSpace())
-    setCurrImageTrackingResult(imageTrackingResult)
+    setImageTrackingResult(imageTrackingResult)
     xrFrameRef.current = gl.xr.getSession().requestAnimationFrame(xrImageTrackingUpdate)
   }, [gl.xr, xrImageTracking])
-
-  useEffect(() => {
-    const doCreateTrackableImage = async () => {
-      try {
-        const currTrackableImage = await createTrackableImage(image, imgSizeInMeters)
-        console.log("here")
-        setTrackableImage(currTrackableImage)
-      } catch (err) {
-        console.log(err);
-      }
-    }
-
-    doCreateTrackableImage()
-
-    return () => trackableImage ? trackableImage.destroy() : null
-  }, [image, imgSizeInMeters, xrImageTracking, trackableImage])
 
   useEffect(() => {
     if (!xrDeviceState.isSupported || !isPresenting) return
@@ -56,11 +39,11 @@ export const useXrTrackedImage = (image, imgSizeInMeters) => {
     return () => {
       xrImageTracking.onSessionEnd()
       session.cancelAnimationFrame(xrFrameRef.current)
-      setCurrImageTrackingResult(null)
+      setImageTrackingResult(null)
     }
   }, [gl.xr, isPresenting, xrImageTracking, xrImageTrackingUpdate, xrDeviceState.isSupported])
 
-  return { imageTrackingResult: currImageTrackingResult, trackableImage: trackableImage?.image }
+  return imageTrackingResult
 }
 
 export default useXrTrackedImage
