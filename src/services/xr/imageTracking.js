@@ -10,7 +10,6 @@ const onXrSessionEnd = () => {
 
 const onXrFrameUpdate = (frame, referenceSpace) => {
   const trackingResults = frame.getImageTrackingResults()
-  console.log(trackingResults);
 
   if (trackingResults.length === 0) return
 
