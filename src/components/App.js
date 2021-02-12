@@ -4,6 +4,7 @@ import { trackableImage as createTrackableImage } from "./../services/xr"
 
 import trackingImageAsset from "./../trackingImages/test.png"
 import Scene from "./Scene"
+import useStore from "./../store"
 
 function App() {
   const image = useRef()
@@ -17,13 +18,13 @@ function App() {
       console.log(err);
     }
   }
-  
 
   return (
     <>
       <img
         onLoad={() => doCreateTrackableImage()}
-        width="300" height="300"
+        width="300" 
+        height="300"
         alt="is cool"
         ref={image}
         src={trackingImageAsset} />

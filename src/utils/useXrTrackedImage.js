@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useRef, useCallback } from "react"
 import { useXR } from "@react-three/xr"
 import { useThree } from "react-three-fiber"
 
-import { imageTracking } from "./services/xr"
+import { imageTracking } from "./../services/xr"
 
 export const useXrTrackedImage = () => {
   const xrDeviceState = useMemo(() => ({
@@ -17,7 +17,10 @@ export const useXrTrackedImage = () => {
   const xrImageTrackingUpdate = useCallback((time, xrFrame) => {
     const imageTrackingResult = xrImageTracking.onFrameUpdate(xrFrame, gl.xr.getReferenceSpace())
     setImageTrackingResult(imageTrackingResult)
-    xrFrameRef.current = gl.xr.getSession().requestAnimationFrame(xrImageTrackingUpdate)
+    const session = gl.xr.getSession()
+    xrFrameRef.current = session.requestAnimationFrame(xrImageTrackingUpdate)
+
+    return () => session.cancelAnimationFrame(xrFrameRef.current)
   }, [gl.xr, xrImageTracking])
 
   useEffect(() => {
