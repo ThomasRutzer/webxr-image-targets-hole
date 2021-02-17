@@ -1,15 +1,16 @@
 import { Sphere } from "@react-three/drei"
 import { Physics, usePlane, useBox, useSphere } from "@react-three/cannon"
 
-const Ball = ({ startPos = [0, 5, 0] }) => {
-  const [ref] = useSphere(() => ({ mass: 2, position: startPos, args: 0.3 }))
+const Ball = ({ startPos }) => {
+  console.log(startPos);
+
+  const [ref] = useSphere(() => ({ mass: 1, position: startPos, args: 0.02 }))
 
   return (
-    <Sphere
-      args={[0.3, 16, 16]}
-      ref={ref}>
+    <mesh castShadow ref={ref}>
+      <sphereBufferGeometry attach="geometry" args={[0.02, 64, 64]} />
       <meshBasicMaterial attach="material" color="hotpink" />
-    </Sphere>
+    </mesh>
   )
 }
 

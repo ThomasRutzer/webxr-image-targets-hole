@@ -2,9 +2,8 @@ import React, { useRef, useState } from "react"
 import { ARCanvas } from "@react-three/xr"
 import { trackableImage as createTrackableImage } from "./../services/xr"
 
-import trackingImageAsset from "./../trackingImages/test.png"
+import trackingImageAsset from "./../trackingImages/hiro.png"
 import Scene from "./Scene"
-import useStore from "./../store"
 
 function App() {
   const image = useRef()
@@ -12,7 +11,7 @@ function App() {
 
   const doCreateTrackableImage = async () => {
     try {
-      const currTrackableImage = await createTrackableImage(image.current, 0.1)
+      const currTrackableImage = await createTrackableImage(image.current, 0.135)
       setTrackableImage(currTrackableImage.image)
     } catch (err) {
       console.log(err);
@@ -23,16 +22,17 @@ function App() {
     <>
       <img
         onLoad={() => doCreateTrackableImage()}
-        width="300" 
+        width="300"
         height="300"
         alt="is cool"
         ref={image}
         src={trackingImageAsset} />
       { trackableImage &&
         <ARCanvas
+          // camera={{ position: [5, 10, 0] }}
           sessionInit={{
             requiredFeatures: ["image-tracking"],
-            trackedImages: [trackableImage]
+          trackedImages: [trackableImage]
           }}>
           <Scene />
         </ARCanvas>

@@ -3,11 +3,11 @@ import React, { Suspense } from "react"
 
 import HoleModel from "./Hole"
 
-const Floor = () => {
+const Floor = (props) => {
 
   return (
     <Suspense fallback={null}>
-      <HoleModel />
+      <HoleModel {...props} />
     </Suspense>
   )
 }
