@@ -1,15 +1,15 @@
-import { useEffect, useState, useMemo, useRef, useCallback } from "react"
+import { useEffect, useState, useMemo, useCallback } from "react"
 import { useXR } from "@react-three/xr"
 import { useThree } from "react-three-fiber"
 
 import { imageTracking } from "./../services/xr"
+import useXRFrame from "./useXRFrame"
 
 export const useXrTrackedImage = () => {
   const xrDeviceState = useMemo(() => ({
     isSupported: !!window.XRImageTrackingResult
   }), [])
   const xrImageTracking = useMemo(() => imageTracking(), [])
-  const xrFrameRef = useRef()
   const [imageTrackingResult, setImageTrackingResult] = useState()
   const { gl } = useThree()
   const { isPresenting } = useXR()
@@ -17,11 +17,9 @@ export const useXrTrackedImage = () => {
   const xrImageTrackingUpdate = useCallback((time, xrFrame) => {
     const imageTrackingResult = xrImageTracking.onFrameUpdate(xrFrame, gl.xr.getReferenceSpace())
     setImageTrackingResult(imageTrackingResult)
-    const session = gl.xr.getSession()
-    xrFrameRef.current = session.requestAnimationFrame(xrImageTrackingUpdate)
-
-    return () => session.cancelAnimationFrame(xrFrameRef.current)
   }, [gl.xr, xrImageTracking])
+
+  useXRFrame(xrImageTrackingUpdate)  
 
   useEffect(() => {
     if (!xrDeviceState.isSupported || !isPresenting) return
@@ -31,7 +29,6 @@ export const useXrTrackedImage = () => {
     const checkCanTrack = async () => {
       try {
         await xrImageTracking.onSessionStart(session)
-        xrFrameRef.current = session.requestAnimationFrame(xrImageTrackingUpdate)
       } catch (err) {
         console.log(err);
       }
@@ -41,7 +38,6 @@ export const useXrTrackedImage = () => {
 
     return () => {
       xrImageTracking.onSessionEnd()
-      session.cancelAnimationFrame(xrFrameRef.current)
       setImageTrackingResult(null)
     }
   }, [gl.xr, isPresenting, xrImageTracking, xrImageTrackingUpdate, xrDeviceState.isSupported])
