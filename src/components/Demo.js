@@ -4,6 +4,7 @@ import { Physics, useSphere, useTrimesh } from '@react-three/cannon'
 import { OrbitControls, TorusKnot, useGLTF } from '@react-three/drei'
 import useInterval from "./../utils/useInterval"
 import useStore from "./../store"
+import randomRange from "./../utils/randomRange"
 
 const WeirdCheerio = (props) => {
   const [ref] = useSphere(() => ({ mass: 1, args: props.radius, ...props }))
