@@ -10,16 +10,57 @@ canvas {
 }
 
 :root {
-  --color-primary: #FE9F1B;
+  --color-primary: #fe9f1b;
   --color-primary-shaded: #8e5507;
-  --color-secondary: #A866EE;
+  --color-secondary: #a866ee;
   --color-secondary-shaded: #894eca;
   --color-white: #e2e2e2;
   --color-white-shaded: #b7b7b7;
-  --color-red: #F74803;
+  --color-red: #f74803;
   --color-red-shaded: #762e11;
+  --color-grey: #ccc;
   --border-radius-default: 4px;
+  --spacing-default: 8px;
+  --spacing-large: 8px;
 }
 
 body {
-  font-family: 'Righteous', sans-serif;}
+  font-family: "Inconsolata", monospace;
+}
+
+.trackedImage {
+  margin: 0 auto;
+  max-width: 300px;
+  text-align: center;
+}
+
+.intro {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-large);
+}
+
+.explanation li {
+  margin-bottom: var(--spacing-default);
+}
+
+.snippet {
+  background: var(--color-grey);
+  color: var(--color-white);
+  border-radius: var(--border-radius-default);
+  padding: 0 2px;
+}
+
+@media print {
+  .trackedImage {
+    max-width: none;
+    width: 100mm;
+    height: 100mm;
+  }
+
+  .explanation, #ARButton {
+    display: none;
+  }
+}
