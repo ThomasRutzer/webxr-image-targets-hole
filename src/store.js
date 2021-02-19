@@ -2,8 +2,10 @@ import create from "zustand"
 
 const useStore = create(set => ({
   balls: [],
-  addBall: (startPos) => set((state) => {
-    return { balls: [...state.balls, { startPos }] }
+  addBall: () => set(state => ({ balls: [...state.balls, true] })),
+  removeBall: (index) => set(state => {
+    const ball = state.balls.indexOf(index)
+    return { balls: ball > -1 ? state.balls.splice(ball, 1) : state.balls }
   })
 }))
 
