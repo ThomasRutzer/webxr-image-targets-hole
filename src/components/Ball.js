@@ -1,15 +1,23 @@
-import { Sphere } from "@react-three/drei"
-import { Physics, usePlane, useBox, useSphere } from "@react-three/cannon"
+import { TextureLoader, RepeatWrapping, VertexColors } from "three"
+import { useLoader } from "react-three-fiber"
+import { useSphere } from "@react-three/cannon"
 
 const Ball = ({ startPos }) => {
-  console.log(startPos);
-
-  const [ref] = useSphere(() => ({ mass: 1, position: startPos, args: 0.02 }))
+  const map = useLoader(TextureLoader, '/ballMaterial.jpg')
+  const [ref] = useSphere(() => ({ mass: 1, position: startPos, args: 0.1 }))
 
   return (
     <mesh castShadow ref={ref}>
-      <sphereBufferGeometry attach="geometry" args={[0.02, 64, 64]} />
-      <meshBasicMaterial attach="material" color="hotpink" />
+      <sphereBufferGeometry attach="geometry" args={[0.1, 64, 64]} />
+      <meshPhongMaterial
+        attach="material"
+        vertexColors={VertexColors}
+        normalMap={map}
+        normalScale={[1, 1]}
+        normalMap-wrapS={RepeatWrapping}
+        normalMap-wrapT={RepeatWrapping}
+        normalMap-repeat={[10, 10]}
+      />
     </mesh>
   )
 }
