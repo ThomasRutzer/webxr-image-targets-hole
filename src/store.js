@@ -1,12 +1,13 @@
 import create from "zustand"
 
+import createUUID from "./utils/createUUID"
+
 const useStore = create(set => ({
   balls: [],
-  addBall: () => set(state => ({ balls: [...state.balls, true] })),
-  removeBall: (index) => set(state => {
-    const ball = state.balls.indexOf(index)
-    return { balls: ball > -1 ? state.balls.splice(ball, 1) : state.balls }
-  })
+  addBall: () => set(state => ({ balls: [...state.balls, `ball-${createUUID()}`] })),
+  removeBall: ballUUID => set(state => ({
+    balls: state.balls.filter(currBall => currBall !== ballUUID)
+  }))
 }))
 
 export default useStore

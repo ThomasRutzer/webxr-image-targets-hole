@@ -2,12 +2,15 @@ import { TextureLoader, RepeatWrapping, VertexColors } from "three"
 import { useLoader } from "react-three-fiber"
 import { useSphere } from "@react-three/cannon"
 
-const Ball = ({ startPos }) => {
+const Ball = ({ name, startPos }) => {
   const map = useLoader(TextureLoader, '/ballMaterial.jpg')
   const [ref] = useSphere(() => ({ mass: 1, position: startPos, args: 0.1 }))
 
   return (
-    <mesh castShadow ref={ref}>
+    <mesh
+      castShadow 
+      name={name}
+      ref={ref}>
       <sphereBufferGeometry attach="geometry" args={[0.1, 64, 64]} />
       <meshPhongMaterial
         attach="material"

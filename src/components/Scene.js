@@ -4,10 +4,13 @@ import { Physics } from "@react-three/cannon"
 
 import useStore from "./../store"
 import useXrTrackedImage from "./../utils/useXrTrackedImage"
-import Bowl 
-from "./Bowl"
+
+import Collider from "./Collider"
+import Bowl from "./Bowl"
 import Ball from "./Ball"
 import randomRange from "./../utils/randomRange"
+
+
 function Scene() {
   const imageTrackingResult = useXrTrackedImage()
   const group = useRef()
@@ -35,18 +38,22 @@ function Scene() {
         <group ref={group}>
           <spotLight
             position={[30, 0, 30]}
-            angle={0.3} penumbra={1}
-            intensity={2} castShadow
+            angle={0.3} 
+            penumbra={1}
+            intensity={2} 
+            castShadow
             shadow-mapSize-width={256}
             shadow-mapSize-height={256} />
           <pointLight position={[-30, 0, -30]} intensity={0.5} />
           <group
-          // scale={[0.07, 0.07, 0.07]}
+            // scale={[0.07, 0.07, 0.07]}
           >
+            <Collider />
             <Bowl rotation={[0, 0, 0]} />
-            {[...Array(balls.length).keys()].map((ball, index) => (
+            {balls.map((ball) => (
               <Ball
-                key={`0${index}`}
+                key={ball}
+                name={ball}
                 startPos={[randomRange(), 9, randomRange()]}
               />
             ))}
