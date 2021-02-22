@@ -10,28 +10,29 @@ canvas {
 }
 
 :root {
-  --color-primary: #fe9f1b;
-  --color-primary-shaded: #8e5507;
-  --color-secondary: #a866ee;
-  --color-secondary-shaded: #894eca;
+  --color-primary: #CF94AF;
+  --color-secondary: #43467F;
   --color-white: #e2e2e2;
   --color-white-shaded: #b7b7b7;
-  --color-red: #f74803;
-  --color-red-shaded: #762e11;
+  --color-black: #262424;
   --color-grey: #ccc;
   --border-radius-default: 4px;
   --spacing-default: 8px;
-  --spacing-large: 8px;
+  --spacing-large: 16px;
+  --font-family: "Inconsolata", monospace
 }
 
 body {
-  font-family: "Inconsolata", monospace;
+  font-family: var(--font-family);
+  background: var(--color-primary);
+  background: linear-gradient(47deg, var(--color-primary) 0%, var(--color-secondary) 95%);
 }
 
 .trackedImage {
   margin: 0 auto;
   max-width: 300px;
   text-align: center;
+  border: 5px solid var(--color-white);
 }
 
 .intro {
@@ -40,17 +41,39 @@ body {
   display: flex;
   flex-direction: column;
   padding: var(--spacing-large);
+  color: var(--color-white);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+}
+
+.explanation {
+  margin-top: var(--spacing-large);
 }
 
 .explanation li {
-  margin-bottom: var(--spacing-default);
+  margin: var(--spacing-default) 0;
 }
 
 .snippet {
   background: var(--color-grey);
-  color: var(--color-white);
+  color: var(--color-black);
   border-radius: var(--border-radius-default);
   padding: 0 2px;
+}
+
+button {
+  background: none;
+  text-decoration: underline;
+  border: none;
+  color: var(--color-white);
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-family);
+  font-size: 1em;
 }
 
 @media print {
