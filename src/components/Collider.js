@@ -15,7 +15,7 @@ const Collider = () => {
   return (
     <mesh ref={ref}>
       <planeBufferGeometry attach="geometry" args={[5, 5]} />
-      <meshBasicMaterial attach="material" color="#171717" />
+      <meshStandardMaterial opacity={0} transparent={true} attach="material" color="#171717" />
     </mesh>
   )
 }
