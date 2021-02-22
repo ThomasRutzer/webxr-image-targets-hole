@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": false,
   "dependencies": {
+    "@react-spring/three": "^9.0.0-rc.3",
     "@react-three/cannon": "^0.5.3",
     "@react-three/drei": "^2.2.3",
     "@react-three/xr": "^2.0.0",
@@ -39,5 +40,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react-hooks": "^5.0.3"
   }
 }
