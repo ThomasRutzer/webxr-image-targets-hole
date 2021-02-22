@@ -21,7 +21,7 @@ function App() {
 
   const doCreateTrackableImage = async () => {
     try {
-      const currTrackableImage = await createTrackableImage(image.current, 0.135)
+      const currTrackableImage = await createTrackableImage(image.current, 0.12)
       setTrackableImage(currTrackableImage.image)
     } catch (err) {
       console.log(err);
@@ -30,7 +30,8 @@ function App() {
 
   return (
     <>
-      {/* <div className="intro">
+      <div className="intro">
+        <h1 className="title">WebXR Image Target – Hole 🕳️</h1>
         <img
           className="trackedImage"
           onLoad={() => doCreateTrackableImage()}
@@ -38,16 +39,16 @@ function App() {
           height="300"
           alt="is cool"
           ref={image}
-          src={process.env.PUBLIC_URL + "/trackedImage.png"} />
+          src={process.env.PUBLIC_URL + "/trackedImage.jpg"} />
         <ol className="explanation">
-          <li>Currently only available in Chrome for Android &gt;=89, with flag <span className="snippet">chrome://flags#webxr-incubations</span> active</li>
-          <li><button onClick={() => window.print()}>Print image</button> (or view on a 2<sup>nd</sup> device)</li>
+          <li><button onClick={() => window.print()}>Print image</button>  10cm X 10cm</li>
           <li>Start AR</li>
           <li>Scan image on flat surface</li>
+          <li>Currently only available in Chrome for Android &gt;=89, with flag <span className="snippet">chrome://flags#webxr-incubations</span> active</li>
         </ol>
       </div>
 
-      { trackableImage && */}
+      { trackableImage &&
         <ARCanvas
           style={{ position: "absolute", left: 0, top: 0 }}
           camera={{ position: [5, 10, 0] }}
@@ -57,7 +58,7 @@ function App() {
           }}>
           <Scene />
         </ARCanvas>
-      {/* } */}
+      }
     </>
   )
 }
