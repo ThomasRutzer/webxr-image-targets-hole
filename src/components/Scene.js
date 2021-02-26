@@ -1,41 +1,50 @@
 import React, { useRef } from "react"
-import { useFrame } from "react-three-fiber"
+import { useFrame, useThree } from "react-three-fiber"
 import { Physics } from "@react-three/cannon"
 import { useTransition } from '@react-spring/three'
 
 import useStore from "./../store"
 import useXrTrackedImage from "./../utils/useXrTrackedImage"
-
 import Collider from "./Collider"
 import Bowl from "./Bowl"
 import Ball from "./Ball"
 import randomRange from "./../utils/randomRange"
+import useInterval from "./../utils/useInterval"
 
 function Scene() {
   const imageTrackingResult = useXrTrackedImage()
   const group = useRef()
-  const balls = useStore(s => s.balls)
+  const store = useStore()
+  const { gl } = useThree()
+
+  useInterval(
+    () => {
+      if (!gl.xr.isPresenting) return
+      store.addBall()
+    },
+    gl.xr.isPresenting ? 3000 : null
+  )
+
 
   const [transitions] = useTransition(
-    balls,
+    store.balls,
     {
       keys: item => item,
       from: { opacity: 0 },
       enter: { opacity: 1 },
       leave: { opacity: 0 }
     },
-    [balls.length]
+    [store.balls.length]
   )
 
   useFrame(() => {
-    if (!group || !group.current) return
-    if (!imageTrackingResult || imageTrackingResult?.emulated) {
-      // group.current.visible = false
+    if (!gl.xr.isPresenting || imageTrackingResult?.emulated) {
+      group.current.visible = false
       return
     }
 
-    if (imageTrackingResult.position && imageTrackingResult.rotation) {
-      //  group.current.visible = true
+    if (imageTrackingResult) {
+      group.current.visible = true
 
       group.current.position.copy(imageTrackingResult.position)
       group.current.rotation.copy(imageTrackingResult.rotation)
@@ -63,13 +72,12 @@ function Scene() {
             <Bowl rotation={[0, 0, 0]} />
             {transitions((props, item) => (
               <Ball
-                {...item} 
+                {...item}
                 {...props}
                 name={item}
                 startPos={[randomRange(-1, 1), 9, randomRange(-1, 1)]}
               />
             ))}
-
           </group>
         </group>
       </Physics>

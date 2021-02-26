@@ -1,23 +1,12 @@
 import React, { useRef, useState } from "react"
 import { ARCanvas } from "@react-three/xr"
-import { trackableImage as createTrackableImage } from "./../services/xr"
 
-import useStore from "./../store"
+import { trackableImage as createTrackableImage } from "./../services/xr"
 import Scene from "./Scene"
-import useInterval from "./../utils/useInterval"
 
 function App() {
   const image = useRef()
   const [trackableImage, setTrackableImage] = useState()
-  const store = useStore()
-
-  useInterval(
-    () => {
-      // if (!imageTrackingResult) return
-      store.addBall()
-    },
-    3000
-  )
 
   const doCreateTrackableImage = async () => {
     try {
