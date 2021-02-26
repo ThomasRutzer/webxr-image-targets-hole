@@ -2,6 +2,7 @@
   "name": "webxr-image-targets-hole",
   "version": "0.1.0",
   "private": false,
+  "homepage": "https://thomasrutzer.github.io/webxr-image-targets-hole/",
   "dependencies": {
     "@react-spring/three": "^9.0.0-rc.3",
     "@react-three/cannon": "^0.6.0",
