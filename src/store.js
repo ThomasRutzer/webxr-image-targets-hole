@@ -7,7 +7,9 @@ const useStore = create(set => ({
   addBall: () => set(state => ({ balls: [...state.balls, `ball-${createUUID()}`] })),
   removeBall: ballUUID => set(state => ({
     balls: state.balls.filter(currBall => currBall !== ballUUID)
-  }))
+  })),
+  isXR: false,
+  setXR: isXR => set(state => ({ isXR }))
 }))
 
 export default useStore

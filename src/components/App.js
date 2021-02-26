@@ -1,16 +1,26 @@
 import React, { useRef, useState } from "react"
 import { ARCanvas } from "@react-three/xr"
 
+import useStore from "./../store"
 import { trackableImage as createTrackableImage } from "./../services/xr"
 import Scene from "./Scene"
+import useInterval from "./../utils/useInterval"
 
 function App() {
+  const store = useStore()
   const image = useRef()
   const [trackableImage, setTrackableImage] = useState()
 
+  useInterval(
+    () => {
+      store.addBall()
+    },
+    store.isXR ? 3000 : null
+  )
+
   const doCreateTrackableImage = async () => {
     try {
-      const currTrackableImage = await createTrackableImage(image.current, 0.1)
+      const currTrackableImage = await createTrackableImage(image.current, 0.11)
       setTrackableImage(currTrackableImage.image)
     } catch (err) {
       console.log(err);
@@ -84,7 +94,6 @@ function App() {
       { trackableImage &&
         <ARCanvas
           style={{ position: "absolute", left: 0, top: 0 }}
-          camera={{ position: [5, 10, 0] }}
           sessionInit={{
             requiredFeatures: ["image-tracking"],
             trackedImages: [trackableImage]

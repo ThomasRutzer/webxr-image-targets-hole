@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React, { useEffect, useRef } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import { Physics } from "@react-three/cannon"
 import { useTransition } from '@react-spring/three'
@@ -9,35 +9,32 @@ import Collider from "./Collider"
 import Bowl from "./Bowl"
 import Ball from "./Ball"
 import randomRange from "./../utils/randomRange"
-import useInterval from "./../utils/useInterval"
 
 function Scene() {
   const imageTrackingResult = useXrTrackedImage()
   const group = useRef()
-  const store = useStore()
+  const balls = useStore(s => s.balls)
+  const setXR = useStore(s => s.setXR)
   const { gl } = useThree()
 
-  useInterval(
-    () => {
-      if (!gl.xr.isPresenting) return
-      store.addBall()
-    },
-    gl.xr.isPresenting ? 3000 : null
-  )
-
-
   const [transitions] = useTransition(
-    store.balls,
+    balls,
     {
       keys: item => item,
       from: { opacity: 0 },
       enter: { opacity: 1 },
       leave: { opacity: 0 }
     },
-    [store.balls.length]
+    [balls.length]
   )
 
+  useEffect(() => {
+    setXR(gl.xr.isPresenting)
+  }, [gl.xr.isPresenting])
+
   useFrame(() => {
+    if (!group.current) return
+
     if (!gl.xr.isPresenting || imageTrackingResult?.emulated) {
       group.current.visible = false
       return
