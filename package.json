@@ -4,17 +4,14 @@
   "private": false,
   "dependencies": {
     "@react-spring/three": "^9.0.0-rc.3",
-    "@react-three/cannon": "^0.5.3",
-    "@react-three/drei": "^2.2.3",
+    "@react-three/cannon": "^0.6.0",
+    "@react-three/drei": "^3.8.7",
     "@react-three/xr": "^2.0.0",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
-    "@testing-library/user-event": "^12.1.10",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.0",
     "react-three-fiber": "^5.1.4",
-    "three": "^0.124.0",
+    "three": "^0.125.2",
     "zustand": "^3.3.1"
   },
   "scripts": {
@@ -42,6 +39,9 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^5.0.3"
+    "@testing-library/react-hooks": "^5.0.3",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10"
   }
 }
