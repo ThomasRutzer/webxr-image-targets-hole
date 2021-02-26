@@ -1,7 +1,7 @@
 # WebXR Image Target – Hole 🕳️
 ![Preview](https://raw.githubusercontent.com/ThomasRutzer/webxr-image-targets-hole/dev/preview.png)
 An experiment to blend AR on a physical image to create illusion. [Try yourself!](https://thomasrutzer.github.io/webxr-image-targets-hole)
-Based on [WebXR Image Tracking AP](https://github.com/immersive-web/marker-tracking/blob/main/explainer.md)
+Based on [WebXR Image Tracking API](https://github.com/immersive-web/marker-tracking/blob/main/explainer.md)
 
 ## Core Tech
 - [reactjs](https://reactjs.org/)
