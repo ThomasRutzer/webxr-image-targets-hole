@@ -37,7 +37,7 @@ function App() {
             onLoad={() => doCreateTrackableImage()}
             alt="is cool"
             ref={image}
-            src={process.env.PUBLIC_URL + "/trackedImage.jpg"} />
+            src={process.env.PUBLIC_URL + "/trackedImage.png"} />
         </section>
         <section>
           <ol className="explanation">
