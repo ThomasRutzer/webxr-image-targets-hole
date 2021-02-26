@@ -20,7 +20,7 @@ function App() {
 
   const doCreateTrackableImage = async () => {
     try {
-      const currTrackableImage = await createTrackableImage(image.current, 0.11)
+      const currTrackableImage = await createTrackableImage(image.current, 0.1)
       setTrackableImage(currTrackableImage.image)
     } catch (err) {
       console.log(err);
