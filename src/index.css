@@ -18,7 +18,8 @@ canvas {
   --color-grey: #ccc;
   --border-radius-default: 4px;
   --spacing-default: 8px;
-  --spacing-large: 16px;
+  --spacing-medium: 16px;
+  --spacing-large: 32px;
   --font-family: "Inconsolata", monospace
 }
 
@@ -28,42 +29,16 @@ body {
   background: linear-gradient(47deg, var(--color-primary) 0%, var(--color-secondary) 95%);
 }
 
-.trackedImage {
-  width: 100%;
-  height: auto;
-  text-align: center;
-  box-sizing: border-box;
-  border: 5px solid var(--color-white);
-}
-
-.intro {
-  position: relative;
-  z-index: 1;
-  display: flex;
-  flex-direction: column;
-  padding: var(--spacing-large);
+a, a:visited {
   color: var(--color-white);
-  max-width: 640px;
-  margin: 0 auto;
 }
 
-.title {
-  text-align: center;
+a svg {
+  stroke: var(--color-white);
 }
 
-.explanation {
-  margin-top: var(--spacing-large);
-}
-
-.explanation li {
-  margin: var(--spacing-default) 0;
-}
-
-.snippet {
-  background: var(--color-grey);
-  color: var(--color-black);
-  border-radius: var(--border-radius-default);
-  padding: 0 2px;
+section {
+  margin-top: var(--spacing-medium);
 }
 
 button {
@@ -77,11 +52,65 @@ button {
   font-size: 1em;
 }
 
+hr {
+  border: none;
+  background:  var(--color-white);
+  height: 2px;
+  margin: var(--spacing-medium) 0;
+}
+
+.trackedImage {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  text-align: center;
+  box-sizing: border-box;
+  border: 5px solid var(--color-white);
+}
+
+.intro {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-medium);
+  color: var(--color-white);
+  max-width: 300px;
+  margin: 0 auto;
+}
+
+.title {
+  text-align: center;
+  line-height: 1.4em;
+  margin-bottom: var(--spacing-large);
+}
+
+.explanation {
+  padding: 0;
+  margin: 0 0 0 24px;
+}
+
+.explanation li {
+  margin: var(--spacing-default) 0;
+}
+
+.snippet {
+  background: var(--color-grey);
+  color: var(--color-black);
+  border-radius: var(--border-radius-default);
+  padding: 0 2px;
+}
+
+.credit {
+  display: block;
+  margin-top: var(--spacing-medium);
+}
+
 @media print {
   .trackedImage {
     max-width: none;
     width: 100mm;
     height: 100mm;
+    border: none;
   }
 
   .explanation, #ARButton {
