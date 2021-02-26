@@ -29,9 +29,10 @@ body {
 }
 
 .trackedImage {
-  margin: 0 auto;
-  max-width: 300px;
+  width: 100%;
+  height: auto;
   text-align: center;
+  box-sizing: border-box;
   border: 5px solid var(--color-white);
 }
 
