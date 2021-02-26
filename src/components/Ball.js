@@ -1,10 +1,10 @@
 import { TextureLoader } from "three"
 import { useLoader } from "react-three-fiber"
 import { useSphere } from "@react-three/cannon"
-import { a } from '@react-spring/three'
+import { a } from "@react-spring/three"
 
 const Ball = ({ name, startPos, opacity }) => {
-  const map = useLoader(TextureLoader, '/ballMaterial.jpg')
+  const map = useLoader(TextureLoader, `${process.env.PUBLIC_URL}/ballMaterial.jpg`)
   const [ref] = useSphere(() => ({ mass: 1, position: startPos, args: 0.1 }))
 
   return (

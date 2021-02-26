@@ -2,7 +2,7 @@ import { useTrimesh } from "@react-three/cannon"
 import { useGLTF } from "@react-three/drei"
 
 const Bowl = (props) => {
-  const { nodes } = useGLTF("./hole.glb")
+  const { nodes } = useGLTF(`${process.env.PUBLIC_URL}/hole.glb`)
   const geometry = nodes.Cube.geometry
   const vertices = geometry.attributes.position.array
   const indices = geometry.index.array
