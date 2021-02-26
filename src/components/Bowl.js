@@ -19,7 +19,7 @@ const Bowl = (props) => {
       geometry={nodes.Cube.geometry}
       receiveShadow
       {...props}>
-      <meshStandardMaterial opacity={0.9} transparent={true} />
+      <meshStandardMaterial opacity={0} transparent={true} />
     </mesh>
   )
 }
