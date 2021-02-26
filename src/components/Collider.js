@@ -6,9 +6,8 @@ const Collider = () => {
   const store = useStore()
   const [ref] = usePlane(() => (
     { mass: 0, 
-      position: [0, -2, 0],
+      position: [0, -1, 0],
       rotation: [-Math.PI / 2, 0, 0],
-      type: "Static",
       onCollide: e => store.removeBall(e.body.name) 
     }))
 
