@@ -2,7 +2,7 @@ import { useEffect, useState, useMemo, useCallback } from "react"
 import { useXR } from "@react-three/xr"
 import { useThree } from "react-three-fiber"
 
-import { imageTracking } from "./../services/xr"
+import { imageTracking } from "../services/xr"
 import useXRFrame from "./useXRFrame"
 
 export const useXrTrackedImage = () => {

@@ -4,7 +4,7 @@ import { Physics } from "@react-three/cannon"
 import { useTransition } from '@react-spring/three'
 
 import useStore from "./../store"
-import useXrTrackedImage from "./../utils/useXrTrackedImage"
+import useXrTrackedImage from "../utils/useXRTrackedImage"
 import Collider from "./Collider"
 import Bowl from "./Bowl"
 import Ball from "./Ball"
