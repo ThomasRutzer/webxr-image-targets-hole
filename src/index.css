@@ -80,6 +80,7 @@ hr {
   text-align: center;
   line-height: 1.4em;
   margin-bottom: var(--spacing-large);
+  white-space: nowrap;
 }
 
 .explanation {
