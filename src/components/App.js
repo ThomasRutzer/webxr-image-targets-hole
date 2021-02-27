@@ -31,7 +31,7 @@ function App() {
     <>
       <div className="intro">
         <section>
-          <h1 className="title">WebXR Image Target – Hole 🕳️</h1>
+          <h1 className="title">WebXR Image Target – Hole</h1>
           <img
             className="trackedImage"
             onLoad={() => doCreateTrackableImage()}
