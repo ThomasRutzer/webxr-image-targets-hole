@@ -63,16 +63,16 @@ function Scene() {
             shadow-mapSize-height={256} />
           <pointLight position={[-30, 0, -30]} intensity={0.5} />
           <group
-            scale={[0.07, 0.07, 0.07]}
+            scale={[0.05, 0.05, 0.05]}
           >
             <Collider />
-            <Bowl rotation={[0, 0, 0]} />
+            <Bowl />
             {transitions((props, item) => (
               <Ball
                 {...item}
                 {...props}
                 name={item}
-                startPos={[randomRange(-1, 1), 9, randomRange(-1, 1)]}
+                startPos={[randomRange(-0.5, 0.5), 9, randomRange(-0.5, 0.5)]}
               />
             ))}
           </group>
