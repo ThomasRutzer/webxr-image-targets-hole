@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/webxr-image-targets-hole/static/css/main.ba314c14.chunk.css",
+    "main.css": "/webxr-image-targets-hole/static/css/main.c8b28ea9.chunk.css",
     "main.js": "/webxr-image-targets-hole/static/js/main.918be944.chunk.js",
     "main.js.map": "/webxr-image-targets-hole/static/js/main.918be944.chunk.js.map",
     "runtime-main.js": "/webxr-image-targets-hole/static/js/runtime-main.50ad3a96.js",
@@ -8,13 +8,13 @@
     "static/js/2.f48de7d4.chunk.js": "/webxr-image-targets-hole/static/js/2.f48de7d4.chunk.js",
     "static/js/2.f48de7d4.chunk.js.map": "/webxr-image-targets-hole/static/js/2.f48de7d4.chunk.js.map",
     "index.html": "/webxr-image-targets-hole/index.html",
-    "static/css/main.ba314c14.chunk.css.map": "/webxr-image-targets-hole/static/css/main.ba314c14.chunk.css.map",
+    "static/css/main.c8b28ea9.chunk.css.map": "/webxr-image-targets-hole/static/css/main.c8b28ea9.chunk.css.map",
     "static/js/2.f48de7d4.chunk.js.LICENSE.txt": "/webxr-image-targets-hole/static/js/2.f48de7d4.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.50ad3a96.js",
     "static/js/2.f48de7d4.chunk.js",
-    "static/css/main.ba314c14.chunk.css",
+    "static/css/main.c8b28ea9.chunk.css",
     "static/js/main.918be944.chunk.js"
   ]
 }
