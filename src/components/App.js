@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react"
 import { ARCanvas } from "@react-three/xr"
 
 import useStore from "./../store"
+import { ADD_BALL_INTERVAL} from "./../settings"
 import { trackableImage as createTrackableImage } from "./../services/xr"
 import Scene from "./Scene"
 import useInterval from "./../utils/useInterval"
@@ -15,7 +16,7 @@ function App() {
     () => {
       store.addBall()
     },
-    store.isXR ? 3000 : null
+    store.isXR ? ADD_BALL_INTERVAL : null
   )
 
   const doCreateTrackableImage = async () => {
@@ -63,7 +64,6 @@ function App() {
             <li>Start AR</li>
             <li>Scan image on flat surface</li>
           </ol>
-
         </section>
 
         <section>
