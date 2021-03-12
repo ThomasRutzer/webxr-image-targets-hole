@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react"
 import { useFrame, useThree } from "react-three-fiber"
 import { Physics } from "@react-three/cannon"
-import { useTransition } from '@react-spring/three'
+import { useTransition } from "@react-spring/three"
 
 import useStore from "./../store"
 import useXrTrackedImage from "../utils/useXRTrackedImage"
@@ -53,21 +53,15 @@ function Scene() {
       <hemisphereLight intensity={0.35} />
       <Physics>
         <group ref={group}>
-          <spotLight
-            position={[30, 0, 30]}
-            angle={0.3}
-            penumbra={1}
-            intensity={2}
-            castShadow
-            shadow-mapSize-width={256}
-            shadow-mapSize-height={256} />
-          <pointLight position={[-30, 0, -30]} intensity={0.5} />
+          <ambientLight intensity={1.5} />
+          <pointLight position={[100, 100, 100]} intensity={2} castShadow />
+          <pointLight position={[-100, -100, -100]} intensity={5} color="#262424" />
           <group
             scale={[0.05, 0.05, 0.05]}
           >
             <Collider />
             <Bowl />
-            {transitions((props, item) => (
+            {transitions((props, item, key) => (
               <Ball
                 {...item}
                 {...props}
