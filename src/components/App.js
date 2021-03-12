@@ -36,7 +36,7 @@ function App() {
           <img
             className="trackedImage"
             onLoad={() => doCreateTrackableImage()}
-            alt="is cool"
+            alt="webxr imagetracking by thomas rutzer"
             ref={image}
             src={process.env.PUBLIC_URL + "/trackedImage.png"} />
         </section>
@@ -64,7 +64,7 @@ function App() {
             <li>Start AR</li>
             <li>Scan image on flat surface</li>
           </ol>
-        </section>
+        </section> 
 
         <section>
           <hr />
