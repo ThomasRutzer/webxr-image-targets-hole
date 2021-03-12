@@ -15,7 +15,7 @@ const Ball = ({ name, startPos, opacity }) => {
         transparent
         opacity={opacity}
         attach="material"
-        color={"#CF94AF"}
+        color={"#43467F"}
       />
     </a.mesh>
   )
