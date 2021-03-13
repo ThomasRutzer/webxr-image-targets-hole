@@ -3,6 +3,9 @@
 An experiment to blend AR on a physical image to create illusion. I [tweeted about](https://twitter.com/ThomasRutzer/status/1370772208633659392).
 Based on [WebXR Image Tracking API](https://github.com/immersive-web/marker-tracking/blob/main/explainer.md)
 
+## Requirements
+Currently only available in Chrome for Android >=89, with flag `chrome://flags#webxr-incubations` active
+
 ## Core Tech
 - [reactjs](https://reactjs.org/)
 - [react-three-fiber](https://github.com/pmndrs/react-three-fiber)
