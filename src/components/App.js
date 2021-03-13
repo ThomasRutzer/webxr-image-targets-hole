@@ -13,9 +13,7 @@ function App() {
   const [trackableImage, setTrackableImage] = useState()
 
   useInterval(
-    () => {
-      store.addBall()
-    },
+    () => { store.addBall() },
     store.isXR ? ADD_BALL_INTERVAL : null
   )
 
